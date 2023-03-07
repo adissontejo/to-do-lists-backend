@@ -5,5 +5,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  resources :lists
+  resources :lists do
+    resources :items do
+      member do
+        put '/check', action: :check
+        put '/uncheck', action: :uncheck
+      end
+    end
+  end
 end
