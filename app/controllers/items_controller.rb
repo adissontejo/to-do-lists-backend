@@ -7,12 +7,12 @@ class ItemsController < ApplicationController
 
   # GET /lists/:list_id/items
   def index
-    render json: @list.items.all
+    render json: @list.items.all, each_serializer: ItemSerializer::Short
   end
 
   # GET /lists/:list_id/items/:id
   def show
-    render json: @item
+    render json: @item, serializer: ItemSerializer::Detailed
   end
 
   # POST /lists/:list_id/items
@@ -23,7 +23,7 @@ class ItemsController < ApplicationController
     @item = @list.items.new params
 
     if @item.save
-      render json: @item
+      render json: @item, serializer: ItemSerializer::Detailed
     else
       render json: @item.errors, status: :bad_request
     end
@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
   # PUT /lists/:lists_id/items/:id
   def update
     if @item.update item_params
-      render json: @item
+      render json: @item, serializer: ItemSerializer::Detailed
     else
       render json: @item.errors, status: :bad_request
     end
@@ -41,7 +41,7 @@ class ItemsController < ApplicationController
   # PUT /lists/:lists_id/items/:id/check
   def check
     if @item.update checked: true
-      render json: @item
+      render json: @item, serializer: ItemSerializer::Short
     else
       render json: @item.errors, status: bad_request
     end
@@ -50,7 +50,7 @@ class ItemsController < ApplicationController
   # PUT /lists/:lists_id/items/:id/uncheck
   def uncheck
     if @item.update checked: false
-      render json: @item
+      render json: @item, serializer: ItemSerializer::Short
     else
       render json: @item.errors, status: bad_request
     end
@@ -73,5 +73,7 @@ class ItemsController < ApplicationController
 
   def set_item
     @item = Item.find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    render json: { error: e.to_s }, status: :not_found
   end
 end

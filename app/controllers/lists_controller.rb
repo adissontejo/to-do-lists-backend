@@ -6,12 +6,12 @@ class ListsController < ApplicationController
 
   # GET /lists
   def index
-    render json: List.all
+    render json: List.all, each_serializer: ListSerializer::Short
   end
 
   # GET /lists/:id
   def show
-    render json: @list
+    render json: @list, serializer: ListSerializer::Detailed
   end
 
   # POST /lists
@@ -19,7 +19,7 @@ class ListsController < ApplicationController
     @list = List.new list_params
 
     if @list.save
-      render json: @list
+      render json: @list, serializer: ListSerializer::Short
     else
       render json: @list.errors, status: :bad_request
     end
@@ -28,7 +28,7 @@ class ListsController < ApplicationController
   # PUT /lists/:id
   def update
     if @list.update list_params
-      render json: @list
+      render json: @list, serializer: ListSerializer::Detailed
     else
       render json: @list.errors, status: :bad_request
     end
@@ -47,5 +47,7 @@ class ListsController < ApplicationController
 
   def set_list
     @list = List.find params[:id]
+  rescue ActiveRecord::RecordNotFound => e
+    render json: { error: e.to_s }, status: :not_found
   end
 end
