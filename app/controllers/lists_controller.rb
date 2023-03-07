@@ -1,14 +1,20 @@
+# frozen_string_literal: true
+
+# Lists CRUD Controller
 class ListsController < ApplicationController
   before_action :set_list, only: %i[show update destroy]
 
+  # GET /lists
   def index
     render json: List.all
   end
 
+  # GET /lists/:id
   def show
     render json: @list
   end
 
+  # POST /lists
   def create
     @list = List.new list_params
 
@@ -19,6 +25,7 @@ class ListsController < ApplicationController
     end
   end
 
+  # PUT /lists/:id
   def update
     if @list.update list_params
       render json: @list
@@ -27,6 +34,7 @@ class ListsController < ApplicationController
     end
   end
 
+  # DELETE /lists/:id
   def destroy
     @list.destroy
   end
