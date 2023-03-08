@@ -10,6 +10,7 @@ gem 'bootsnap', require: false
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'puma', '~> 5.0'
+gem 'rack-cors'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.2'
 gem 'sprockets-rails'
 gem 'sqlite3', '~> 1.4'
