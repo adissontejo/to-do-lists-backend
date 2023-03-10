@@ -3,13 +3,13 @@
 # Item Serializer
 
 class ItemSerializer
-  # Short serializing
-  class Short < ApplicationSerializer
+  # Default serializing
+  class Default < ApplicationSerializer
     attributes :id, :description, :checked, :created_at, :updated_at
   end
 
-  # Detailed serializing
-  class Detailed < Short
-    belongs_to :list
+  # Serializing with list
+  class WithList < Default
+    belongs_to :list, serializer: ListSerializer::Default
   end
 end

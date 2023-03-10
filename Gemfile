@@ -6,9 +6,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.0'
 
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'bcrypt'
 gem 'bootsnap', require: false
 gem 'importmap-rails'
 gem 'jbuilder'
+gem 'jwt'
 gem 'puma', '~> 5.0'
 gem 'rack-cors'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.2'

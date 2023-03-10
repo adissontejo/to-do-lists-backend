@@ -2,8 +2,8 @@
 
 # List Serializer
 class ListSerializer
-  # Short serializing
-  class Short < ApplicationSerializer
+  # Default serializing
+  class Default < ApplicationSerializer
     attributes :id, :title, :description, :created_at, :updated_at, :done_items, :total_items
 
     def done_items
@@ -15,8 +15,8 @@ class ListSerializer
     end
   end
 
-  # Detailed serializing
-  class Detailed < Short
-    has_many :items
+  # Serializing with items
+  class WithItems < Default
+    has_many :items, serializer: ItemSerializer::Default
   end
 end
