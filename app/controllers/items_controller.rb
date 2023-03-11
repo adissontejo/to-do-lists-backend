@@ -2,6 +2,7 @@
 
 # Items API Controller
 class ItemsController < ApplicationController
+  before_action :ensure_authenticated
   before_action :set_list
   before_action :set_item, only: %i[show update check uncheck destroy]
 
